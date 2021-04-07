@@ -24,7 +24,6 @@ public class Contacto {
         this.nombre = nombre;
         this.telefono1 = telefono1;
     }
-    public Contacto(){}
     public Contacto(String nombre, String telefono1, String telefono2, String telefono3, String correo, String Direccion, String alias) {
         this.nombre = nombre;
         this.telefono1 = telefono1;
@@ -92,46 +91,53 @@ public class Contacto {
         this.alias = alias;
     }
 
+    public String toWrite(){
+        return nombre+";"+telefono1+","+telefono2+","+telefono3+";"+correo+";"+Direccion+";"+alias+";";
+    }
     
     @Override
     public String toString() {
-        return "Contacto{" + "nombre=" + nombre + ", telefono1=" + telefono1 + ", telefono2=" + telefono2 + ", telefono3=" + telefono3 + ", correo=" + correo + ", Direccion=" + Direccion + ", alias=" + alias + '}';
+        return "nombre:" + nombre + "\n telefono1:" + telefono1 + "\ntelefono2:" + telefono2 + "\n telefono3:" + telefono3 + "\n  correo:" + correo + "\n Direccion:" + Direccion + "\n alias:" + alias + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.telefono1);
+        hash = 37 * hash + Objects.hashCode(this.telefono2);
+        hash = 37 * hash + Objects.hashCode(this.telefono3);
         return hash;
     }
+
 
     @Override
     public boolean equals(Object obj) {
         final Contacto other = (Contacto) obj;
-        if (Objects.equals(this.telefono1, other.telefono1) &&this.telefono1 != null) {
+        if (Objects.equals(this.telefono1, other.telefono1) &&!"".equals(this.telefono1)) {
             return false;
         }
-        if (Objects.equals(this.telefono1, other.telefono2) && this.telefono1 != null) {
+        if (Objects.equals(this.telefono1, other.telefono2) && !"".equals(this.telefono1)) {
             return false;
         }
-        if (Objects.equals(this.telefono1, other.telefono3) && this.telefono1 != null) {
+        if (Objects.equals(this.telefono1, other.telefono3) && !"".equals(this.telefono1)) {
             return false;
         }
-        if (Objects.equals(this.telefono2, other.telefono1) && this.telefono1 != null) {
+        if (Objects.equals(this.telefono2, other.telefono1) && !"".equals(this.telefono1)) {
             return false;
         }
-        if (Objects.equals(this.telefono2, other.telefono2) && this.telefono2 != null) {
+        if (Objects.equals(this.telefono2, other.telefono2) && !"".equals(this.telefono2)) {
             return false;
         }
-        if (Objects.equals(this.telefono2, other.telefono3) && this.telefono2 != null) {
+        if (Objects.equals(this.telefono2, other.telefono3) && !"".equals(this.telefono2)) {
             return false;
         }
-        if (Objects.equals(this.telefono3, other.telefono1)&& this.telefono1 != null) {
+        if (Objects.equals(this.telefono3, other.telefono1)&& !"".equals(this.telefono1)) {
             return false;
         }
-        if (Objects.equals(this.telefono3, other.telefono2) && this.telefono2 != null) {
+        if (Objects.equals(this.telefono3, other.telefono2) && !"".equals(this.telefono2)) {
             return false;
         }
-        if (Objects.equals(this.telefono3, other.telefono3) && this.telefono3 != null) {
+        if (Objects.equals(this.telefono3, other.telefono3) && !"".equals(this.telefono3)) {
             return false;
         }
         return true;

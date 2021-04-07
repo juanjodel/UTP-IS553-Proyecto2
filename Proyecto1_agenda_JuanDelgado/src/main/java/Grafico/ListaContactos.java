@@ -14,14 +14,15 @@ import javax.swing.table.DefaultTableModel;
  * @author Juanjo
  */
 public class ListaContactos extends DefaultTableModel{
-    private final String[] columnas ={"Nombre", "Telefono", "Correo","Direccion", "Alias"};
-     private List<Contacto> datos;
-     
-     public ListaContactos(List<Contacto> datos) {
+    private final String[] columnas = {"Nombre", "Telefono", "Correo","Direccion", "Alias"};
+    private List<Contacto> datos;
+
+    public ListaContactos(List<Contacto> datos) {
         this.datos = datos;
         super.setColumnIdentifiers(columnas);
     }
-     public void setDatos(List<Contacto> datos) {
+
+    public void setDatos(List<Contacto> datos) {
         this.datos = datos;
         actualizarDatos();
     }
@@ -78,5 +79,4 @@ public class ListaContactos extends DefaultTableModel{
         }
         return super.getColumnClass(column);
     }
-    
 }

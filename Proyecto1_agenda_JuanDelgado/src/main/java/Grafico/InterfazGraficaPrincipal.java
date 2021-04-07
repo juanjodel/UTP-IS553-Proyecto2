@@ -1,16 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Grafico;
 
 import Errores.FaltanCampo;
 import Clases.Agenda;
 import Clases.Contacto;
+import Grafico.ListaContactos;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -27,7 +33,10 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
      */
     public InterfazGraficaPrincipal() {
         initComponents();
+        CrearArchivo();
         iniciarLibreta();
+        leer();
+        cerrar();
     }
 
     /**
@@ -41,10 +50,12 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        buscar = new javax.swing.JButton();
+        buscartxt = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        eliminarbtn = new javax.swing.JButton();
+        Actualizar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -70,21 +81,22 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
         Guardarbtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("AGENDA");
 
-        jButton1.setText("BUSCAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        buscar.setText("BUSCAR");
+        buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                buscarActionPerformed(evt);
             }
         });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        buscartxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                buscartxtActionPerformed(evt);
             }
         });
 
@@ -101,6 +113,20 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        eliminarbtn.setText("Eliminar");
+        eliminarbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarbtnActionPerformed(evt);
+            }
+        });
+
+        Actualizar.setText("Actualizar");
+        Actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ActualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -109,22 +135,33 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(buscartxt, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(eliminarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buscar)
+                    .addComponent(buscartxt, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(eliminarbtn)
+                    .addComponent(Actualizar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -376,15 +413,14 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(Guardarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(28, 28, 28)))))
                 .addContainerGap())
@@ -407,13 +443,20 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
+        String textoAbuscar=buscartxt.getText().trim();
+        String Encontro=agenda.buscar(textoAbuscar);
+        if(Encontro != null)
+            JOptionPane.showMessageDialog(this,Encontro,getTitle(), JOptionPane.INFORMATION_MESSAGE);
+        else
+            JOptionPane.showMessageDialog(this, "No se encontro el contacto",getTitle(), JOptionPane.ERROR_MESSAGE);
+        
+        
+    }//GEN-LAST:event_buscarActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void buscartxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscartxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_buscartxtActionPerformed
 
     private void nombretxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombretxtActionPerformed
         // TODO add your handling code here:
@@ -442,10 +485,13 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
     private void GuardarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarbtnActionPerformed
         try {
             // Validar campos obligatorios
-            agenda.agregar(ObtenerContactos());
+            if(agenda.agregar(ObtenerContactos())){
+                JOptionPane.showMessageDialog(this, "Persona guardada exitosamente!",getTitle(), JOptionPane.DEFAULT_OPTION);
+            }else{
+                JOptionPane.showMessageDialog(this, "El numero de telefono ya esta asignado a otro contacto",getTitle(), JOptionPane.OK_OPTION);
+            }
             // Actualizo los atos en la tabla
             listaContactos.actualizarDatos();
-            JOptionPane.showMessageDialog(this, "Persona guardada exitosamente!",getTitle(), JOptionPane.OK_OPTION);
         } catch (FaltanCampo ex){
             JOptionPane.showMessageDialog(this, ex.getMessage(), getTitle(), JOptionPane.ERROR_MESSAGE);
         }
@@ -455,6 +501,30 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_aliastxtActionPerformed
 
+    private void eliminarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarbtnActionPerformed
+        int row = jTable1.getSelectedRow();
+        System.out.println(row);
+        if (row != -1) {
+                System.out.println(listaContactos.getDato(row));
+                agenda.eliminarPosicion(row);
+                JOptionPane.showMessageDialog(this, "Persona eliminada exitosamente!",
+                        getTitle(), JOptionPane.ERROR_MESSAGE);
+                listaContactos.actualizarDatos();
+                System.out.println(agenda.toString());
+        }
+    }//GEN-LAST:event_eliminarbtnActionPerformed
+
+    private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
+        int row = jTable1.getSelectedRow();
+        agenda.eliminarPosicion(row);        
+        try {
+            agenda.agregar(ObtenerContactos());
+            listaContactos.actualizarDatos();
+        } catch (FaltanCampo ex) {
+            Logger.getLogger(InterfazGraficaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ActualizarActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -482,39 +552,131 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InterfazGraficaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InterfazGraficaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InterfazGraficaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InterfazGraficaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new InterfazGraficaPrincipal().setVisible(true);
             }
-        });
+        });     
+    }
+    
+    private void CrearArchivo(){
+        File archivo =new File("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1\\src\\main\\java\\archivos\\contactos.txt");
+           if(!archivo.exists()){
+                try {
+                    archivo.createNewFile();
+                } catch (IOException ex) {
+                    System.out.println("No se creo el archivo");
+                }
+           }
+    }
+    public void Escribir(){
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try{
+            fichero = new FileWriter("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1\\src\\main\\java\\archivos\\contactos.txt");
+            pw = new PrintWriter(fichero);
+            for (int i = 0; i < agenda.contactos.size(); i++) {
+                String contacto = agenda.contactos.get(i).toWrite();
+                for (int j = 0; j < contacto.length()-1; j++)
+                    pw.print(contacto.charAt(j));
+                pw.println();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+           try {
+           if (null != fichero)
+              fichero.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+        } 
+    
+    }
+   public void cerrar(){
+        try{
+            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            addWindowListener(new WindowAdapter(){
+                    public void windowClosing(WindowEvent e){
+                    Escribir();
+                        System.out.println("Llego hasra aui");
+                    }
+            });
+            this.setVisible(true);
+        }catch(Exception e){
+            System.out.println("No se pudo escribir");
+        }
+    }
+    public void leer(){
+        try {
+           BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1\\src\\main\\java\\archivos\\contactos.txt"));
+           String texto =br.readLine();
+           while(texto != null){
+               System.out.println("ksdndsflk");
+               importar(texto.trim());
+               texto = br.readLine();
+           }
+        } catch (IOException ex) {
+            System.out.println("No se pudo leer");
+        }
+    }
+    private void importar (String texto){
+        String[] arrSplit = texto.split("\\;");
+        String nombre= arrSplit[0];
+        String tel= arrSplit[1];
+        String correo= arrSplit[2];
+        String direccion= arrSplit[3];
+        String alias= arrSplit[4];
+        Contacto a = new Contacto(nombre,tel,"","",correo,direccion,alias);
+        agenda.agregar(a);
     }
     private void iniciarLibreta() {
+        
         agenda= new Agenda(); 
-        // Si hay personas en libreta , llena la lista de personas
         listaContactos = new ListaContactos(agenda.getContactos());
         jTable1.setModel(listaContactos);
-
-        // Inicializar la escucha de la seleccion en la tabla
         jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTable1.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            int row = jTable1.getSelectedRow();
+            if (row == -1) {
+                limpiarCampos();
+            } else {
+                cargarCampos(listaContactos.getDato(row));
+            }
+            eliminarbtn.setEnabled(row != -1);
+        });
         
+    }
+    
+    private void limpiarCampos() {
+        // 1. Limpiar campos del formulario
+        nombretxt.setText("");
+        tel1txt.setText("");
+        tel2txt.setText("");
+        tel3txt.setText("");
+        diretxt.setText("");
+        emailtxt.setText("");
+        aliastxt.setText("");
        
+        // 2. Limpiar la seleccion de la tabla
+        jTable1.clearSelection();
+
+        // 3. Dar el foco al campo para empezar a digitar
+        tel1txt.requestFocus();
+    }
+
+    private void cargarCampos(Contacto c) {
+        // 1. Limpiar campos del formulario
+        nombretxt.setText(c.getNombre());
+        tel1txt.setText(c.getTelefono1());
+        tel2txt.setText(c.getTelefono2());
+        tel3txt.setText(c.getTelefono3());
+        diretxt.setText(c.getDireccion());
+        emailtxt.setText(c.getCorreo());
+        aliastxt.setText(c.getAlias());
+        // 2. Dar el foco al campo para empezar a digitar
+        tel1txt.requestFocus();
     }
     private Contacto ObtenerContactos() throws FaltanCampo{
         // Valido los campos
@@ -541,11 +703,14 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Actualizar;
     private javax.swing.JButton Guardarbtn;
     private javax.swing.JTextField aliastxt;
+    private javax.swing.JButton buscar;
+    private javax.swing.JTextField buscartxt;
     private javax.swing.JTextField diretxt;
+    private javax.swing.JButton eliminarbtn;
     private javax.swing.JTextField emailtxt;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -565,7 +730,6 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField nombretxt;
     private javax.swing.JTextField tel1txt;
     private javax.swing.JTextField tel2txt;
