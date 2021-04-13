@@ -3,6 +3,7 @@ package Grafico;
 import Errores.FaltanCampo;
 import Clases.Agenda;
 import Clases.Contacto;
+import Errores.NoCrearArchivo;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Insets;
@@ -37,7 +38,7 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form InterfazGrafica
      */
-    public InterfazGraficaPrincipal() {
+    public InterfazGraficaPrincipal() throws NoCrearArchivo {
         initComponents();
         try {
             FondoSwing fondo = new FondoSwing(ImageIO.read(new File("C:\\Users\\Juanjo\\Documents\\NetBeansProjects\\Proyecto1_agenda_JuanDelgado\\src\\main\\java\\Imagenes\\Fondo.jpg")));
@@ -601,18 +602,22 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InterfazGraficaPrincipal().setVisible(true);
+                try {
+                    new InterfazGraficaPrincipal().setVisible(true);
+                } catch (NoCrearArchivo ex) {
+                    Logger.getLogger(InterfazGraficaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });     
     }
     
-    private void CrearArchivo(){
+    private void CrearArchivo() throws NoCrearArchivo{
         File archivo =new File("C:\\Users\\Juanjo\\Documents\\NetBeansProjects\\Proyecto1_agenda_JuanDelgado\\src\\main\\java\\Local_archivos");
            if(!archivo.exists()){
                 try {
                     archivo.createNewFile();
                 } catch (IOException ex) {
-                    System.out.println("No se creo el archivo");
+                     throw new NoCrearArchivo("No se creo archivo");
                 }
            }
     }
@@ -640,31 +645,29 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
         } 
     
     }
-   public void cerrar(){
+   public void cerrar() throws NoCrearArchivo{
         try{
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             addWindowListener(new WindowAdapter(){
                     public void windowClosing(WindowEvent e){
                     Escribir();
-                        System.out.println("Llego hasra aui");
                     }
             });
             this.setVisible(true);
         }catch(Exception e){
-            System.out.println("No se pudo escribir");
+             throw new NoCrearArchivo("No se pudo escribir");
         }
     }
-    public void leer(){
+    public void leer() throws NoCrearArchivo {
         try {
            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1\\src\\main\\java\\archivos\\contactos.txt"));
            String texto =br.readLine();
            while(texto != null){
-               System.out.println("ksdndsflk");
                importar(texto.trim());
                texto = br.readLine();
            }
         } catch (IOException ex) {
-            System.out.println("No se pudo leer");
+             throw new NoCrearArchivo("No se pudo leer");
         }
     }
     private void importar (String texto){
