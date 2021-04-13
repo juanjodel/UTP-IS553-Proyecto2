@@ -3,10 +3,13 @@ package Grafico;
 import Errores.FaltanCampo;
 import Clases.Agenda;
 import Clases.Contacto;
-import Grafico.ListaContactos;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,9 +19,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 
 /**
@@ -33,11 +39,47 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
      */
     public InterfazGraficaPrincipal() {
         initComponents();
+        try {
+            FondoSwing fondo = new FondoSwing(ImageIO.read(new File("C:\\Users\\Juanjo\\Documents\\NetBeansProjects\\Proyecto1_agenda_JuanDelgado\\src\\main\\java\\Imagenes\\Fondo.jpg")));
+            JPanel panel = (JPanel) this.getContentPane();
+            panel.setBorder(fondo);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
         CrearArchivo();
         iniciarLibreta();
         leer();
         cerrar();
     }
+    public class FondoSwing implements Border {
+     
+    private BufferedImage mImagen = null;
+    
+    /**
+     * Constructor, indicamos la imagen que queremos que se redimensione
+     * @param pImagen ImageIO.read(new File(ruta imagen))
+     */
+    public FondoSwing(BufferedImage pImagen) {
+        mImagen = pImagen;       
+    }
+     
+    @Override
+    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+        if (mImagen != null) {
+            g.drawImage(mImagen, 0, 0, width, height, null);
+        }
+    }
+     
+    @Override
+    public Insets getBorderInsets(Component c) {
+        return new Insets(0, 0, 0, 0);
+    }
+     
+    @Override
+    public boolean isBorderOpaque() {
+        return true;
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,8 +126,11 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
         setAlwaysOnTop(true);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("AGENDA");
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         buscar.setText("BUSCAR");
         buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -100,6 +145,7 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jTable1.setAutoCreateRowSorter(true);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -138,10 +184,10 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(buscartxt, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buscartxt, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,10 +199,11 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(buscar)
-                    .addComponent(buscartxt, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(buscartxt)
+                        .addGap(1, 1, 1)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -165,7 +212,7 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(51, 51, 255));
 
         jLabel1.setText("Nombre");
 
@@ -451,7 +498,6 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
         else
             JOptionPane.showMessageDialog(this, "No se encontro el contacto",getTitle(), JOptionPane.ERROR_MESSAGE);
         
-        
     }//GEN-LAST:event_buscarActionPerformed
 
     private void buscartxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscartxtActionPerformed
@@ -561,7 +607,7 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
     }
     
     private void CrearArchivo(){
-        File archivo =new File("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1\\src\\main\\java\\archivos\\contactos.txt");
+        File archivo =new File("C:\\Users\\Juanjo\\Documents\\NetBeansProjects\\Proyecto1_agenda_JuanDelgado\\src\\main\\java\\Local_archivos");
            if(!archivo.exists()){
                 try {
                     archivo.createNewFile();
@@ -574,11 +620,11 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
         FileWriter fichero = null;
         PrintWriter pw = null;
         try{
-            fichero = new FileWriter("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1\\src\\main\\java\\archivos\\contactos.txt");
+            fichero = new FileWriter("C:\\Users\\Juanjo\\Documents\\NetBeansProjects\\Proyecto1_agenda_JuanDelgado\\src\\main\\java\\Local_archivos");
             pw = new PrintWriter(fichero);
             for (int i = 0; i < agenda.contactos.size(); i++) {
                 String contacto = agenda.contactos.get(i).toWrite();
-                for (int j = 0; j < contacto.length()-1; j++)
+                for (int j = 0; j < contacto.length(); j++)
                     pw.print(contacto.charAt(j));
                 pw.println();
             }
@@ -624,11 +670,15 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
     private void importar (String texto){
         String[] arrSplit = texto.split("\\;");
         String nombre= arrSplit[0];
-        String tel= arrSplit[1];
+        String aux=arrSplit[1];
+        String[] arrSplit2=aux.split("\\,");
+        String tel= arrSplit2[0];
+        String tel2=arrSplit2[1];
+        String tel3=arrSplit2[2];
         String correo= arrSplit[2];
         String direccion= arrSplit[3];
         String alias= arrSplit[4];
-        Contacto a = new Contacto(nombre,tel,"","",correo,direccion,alias);
+        Contacto a = new Contacto(nombre,tel,tel2,tel3,correo,direccion,alias);
         agenda.agregar(a);
     }
     private void iniciarLibreta() {
@@ -693,7 +743,7 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
                 nombretxt.getText().trim(),
                 tel1txt.getText().trim(),
                 tel2txt.getText().trim(),
-                tel3txt.getText().trim(),
+                tel3txt.getText()+" ",
                 emailtxt.getText().trim(),
                 diretxt.getText().trim(),
                 aliastxt.getText().trim());                

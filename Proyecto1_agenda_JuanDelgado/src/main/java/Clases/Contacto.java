@@ -92,7 +92,7 @@ public class Contacto {
     }
 
     public String toWrite(){
-        return nombre+";"+telefono1+","+telefono2+","+telefono3+";"+correo+";"+Direccion+";"+alias+";";
+        return nombre+";"+telefono1+","+telefono2+","+telefono3+";"+correo+";"+Direccion+";"+alias+";a";
     }
     
     @Override
@@ -113,7 +113,7 @@ public class Contacto {
     @Override
     public boolean equals(Object obj) {
         final Contacto other = (Contacto) obj;
-        if (Objects.equals(this.telefono1, other.telefono1) &&!"".equals(this.telefono1)) {
+        if (Objects.equals(this.telefono1, other.telefono1) &&!"".equals(this.telefono1) ) {
             return false;
         }
         if (Objects.equals(this.telefono1, other.telefono2) && !"".equals(this.telefono1)) {
@@ -137,7 +137,7 @@ public class Contacto {
         if (Objects.equals(this.telefono3, other.telefono2) && !"".equals(this.telefono2)) {
             return false;
         }
-        if (Objects.equals(this.telefono3, other.telefono3) && !"".equals(this.telefono3)) {
+        if (Objects.equals(this.telefono3, other.telefono3) && !"".equals(this.telefono3)&& !" ".equals(telefono3)) {
             return false;
         }
         return true;
