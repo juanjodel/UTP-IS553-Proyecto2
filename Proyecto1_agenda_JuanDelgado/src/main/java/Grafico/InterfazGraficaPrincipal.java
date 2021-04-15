@@ -550,14 +550,14 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
 
     private void eliminarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarbtnActionPerformed
         int row = jTable1.getSelectedRow();
-        System.out.println(row);
+        
         if (row != -1) {
-                System.out.println(listaContactos.getDato(row));
+               
                 agenda.eliminarPosicion(row);
                 JOptionPane.showMessageDialog(this, "Persona eliminada exitosamente!",
                         getTitle(), JOptionPane.ERROR_MESSAGE);
                 listaContactos.actualizarDatos();
-                System.out.println(agenda.toString());
+                
         }
     }//GEN-LAST:event_eliminarbtnActionPerformed
 
@@ -665,14 +665,14 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Juanjo\\Documents\\NetBeansProjects\\Proyecto1_agenda_JuanDelgado\\src\\main\\java\\Local_archivos\\contactos.txt"));
            String texto =br.readLine();
            while(texto != null){
-               importar(texto.trim());
+               cargar(texto.trim());
                texto = br.readLine();
            }
         } catch (IOException ex) {
              throw new NoCrearArchivo("No se pudo leer");
         }
     }
-    private void importar (String texto){
+    private void cargar (String texto){
         String[] arrSplit = texto.split("\\;");
         String nombre= arrSplit[0];
         String aux=arrSplit[1];

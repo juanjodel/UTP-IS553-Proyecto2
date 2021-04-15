@@ -40,11 +40,12 @@ public class Agenda {
         }
         return true;
     }
-    
+    /*
     public void eliminarContacto(Contacto c){
         System.out.println(c.toString()+"se elimino");
          contactos.remove(c);
     }
+    */
     public void eliminarPosicion(int p){
         contactos.remove(p);
     }
@@ -62,6 +63,7 @@ public class Agenda {
          }
         return null;
     }
+    /*
     public  void editar(Contacto c,String telefono) {
         for (int i = 0; i < contactos.size(); i++) {
             System.out.println(i);
@@ -70,7 +72,7 @@ public class Agenda {
             }   
         }
     }
-
+   */
     @Override
     public String toString() {
         return "Agenda{" + "contactos=" + contactos + '}';
