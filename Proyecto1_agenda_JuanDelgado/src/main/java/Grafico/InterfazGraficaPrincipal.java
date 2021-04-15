@@ -612,12 +612,14 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
     }
     
     private void CrearArchivo() throws NoCrearArchivo{
-        File archivo =new File("C:\\Users\\Juanjo\\Documents\\NetBeansProjects\\Proyecto1_agenda_JuanDelgado\\src\\main\\java\\Local_archivos");
+        File archivo =new File("C:\\Users\\Juanjo\\Documents\\NetBeansProjects\\Proyecto1_agenda_JuanDelgado\\src\\main\\java\\Local_archivos\\contactos.txt");
            if(!archivo.exists()){
                 try {
                     archivo.createNewFile();
                 } catch (IOException ex) {
+                    
                      throw new NoCrearArchivo("No se creo archivo");
+                     
                 }
            }
     }
@@ -625,7 +627,7 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
         FileWriter fichero = null;
         PrintWriter pw = null;
         try{
-            fichero = new FileWriter("C:\\Users\\Juanjo\\Documents\\NetBeansProjects\\Proyecto1_agenda_JuanDelgado\\src\\main\\java\\Local_archivos");
+            fichero = new FileWriter("C:\\Users\\Juanjo\\Documents\\NetBeansProjects\\Proyecto1_agenda_JuanDelgado\\src\\main\\java\\Local_archivos\\contactos.txt");
             pw = new PrintWriter(fichero);
             for (int i = 0; i < agenda.contactos.size(); i++) {
                 String contacto = agenda.contactos.get(i).toWrite();
@@ -660,7 +662,7 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
     }
     public void leer() throws NoCrearArchivo {
         try {
-           BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\jarol\\Desktop\\Programacion 4\\Proyecto1\\src\\main\\java\\archivos\\contactos.txt"));
+           BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Juanjo\\Documents\\NetBeansProjects\\Proyecto1_agenda_JuanDelgado\\src\\main\\java\\Local_archivos\\contactos.txt"));
            String texto =br.readLine();
            while(texto != null){
                importar(texto.trim());
