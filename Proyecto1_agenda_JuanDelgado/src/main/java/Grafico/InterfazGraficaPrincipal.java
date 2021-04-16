@@ -785,7 +785,10 @@ public class InterfazGraficaPrincipal extends javax.swing.JFrame {
         }
         if (!tel1txt.getText().trim().matches("[0-9]+")) {
             throw new FaltanCampo("Los telefonos son solo numericos");
-        }     
+        }
+        if (lugartxt.getText().isBlank()) {
+            throw new FaltanCampo("EL lugar es un campo obligatorio");
+        }
         return new Contacto(
                 nombretxt.getText().trim(),
                 tel1txt.getText().trim(),

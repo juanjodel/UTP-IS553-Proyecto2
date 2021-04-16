@@ -100,12 +100,12 @@ public class Contacto {
         this.lugar = lugar;
     }
     public String toWrite(){
-        return nombre+";"+telefono1+","+telefono2+","+telefono3+";"+correo+";"+Direccion+";"+alias+";"+";"+lugar;
+        return nombre+";"+telefono1+","+telefono2+","+telefono3+";"+correo+";"+Direccion+";"+alias+";"+lugar+";";
     }
     
     @Override
     public String toString() {
-        return "nombre:" + nombre + "\n telefono1:" + telefono1 + "\ntelefono2:" + telefono2 + "\n telefono3:" + telefono3 + "\n  correo:" + correo + "\n Direccion:" + Direccion + "\n alias:" + alias +lugar+"\n lugar:"+ '}';
+        return "nombre:" + nombre + "\n telefono1:" + telefono1 + "\ntelefono2:" + telefono2 + "\n telefono3:" + telefono3 + "\n  correo:" + correo + "\n Direccion:" + Direccion + "\n alias:" + alias +"\n lugar:"+lugar+ '}';
     }
 
     @Override
