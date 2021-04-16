@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Juanjo
  */
 public class ListaContactos extends DefaultTableModel{
-    private final String[] columnas = {"Nombre", "Telefono", "Correo","Direccion", "Alias"};
+    private final String[] columnas = {"Nombre", "Telefono", "Correo","Direccion", "Alias","Lugar"};
     private List<Contacto> datos;
 
     public ListaContactos(List<Contacto> datos) {
@@ -54,6 +54,8 @@ public class ListaContactos extends DefaultTableModel{
                 return persona.getDireccion();
             case 4: // Estado
                 return persona.getAlias();
+            case 5: // Estado
+                return persona.getLugar();    
                 
         }
         return super.getValueAt(row, column);

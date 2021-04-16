@@ -19,12 +19,13 @@ public class Contacto {
     private String correo;
     private String Direccion;
     private String alias;
+    private String lugar;
 
     public Contacto(String nombre, String telefono1) {
         this.nombre = nombre;
         this.telefono1 = telefono1;
     }
-    public Contacto(String nombre, String telefono1, String telefono2, String telefono3, String correo, String Direccion, String alias) {
+    public Contacto(String nombre, String telefono1, String telefono2, String telefono3, String correo, String Direccion, String alias,String lugar) {
         this.nombre = nombre;
         this.telefono1 = telefono1;
         this.telefono2 = telefono2;
@@ -32,6 +33,7 @@ public class Contacto {
         this.correo = correo;
         this.Direccion = Direccion;
         this.alias = alias;
+        this.lugar = lugar;
     }
     
 
@@ -90,14 +92,20 @@ public class Contacto {
     public void setAlias(String alias) {
         this.alias = alias;
     }
+    public String getLugar() {
+        return lugar;
+    }
 
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
+    }
     public String toWrite(){
-        return nombre+";"+telefono1+","+telefono2+","+telefono3+";"+correo+";"+Direccion+";"+alias+";a";
+        return nombre+";"+telefono1+","+telefono2+","+telefono3+";"+correo+";"+Direccion+";"+alias+";"+";"+lugar;
     }
     
     @Override
     public String toString() {
-        return "nombre:" + nombre + "\n telefono1:" + telefono1 + "\ntelefono2:" + telefono2 + "\n telefono3:" + telefono3 + "\n  correo:" + correo + "\n Direccion:" + Direccion + "\n alias:" + alias + '}';
+        return "nombre:" + nombre + "\n telefono1:" + telefono1 + "\ntelefono2:" + telefono2 + "\n telefono3:" + telefono3 + "\n  correo:" + correo + "\n Direccion:" + Direccion + "\n alias:" + alias +lugar+"\n lugar:"+ '}';
     }
 
     @Override

@@ -57,7 +57,8 @@ public class Agenda {
               || textoBuscar.equals(contactos.get(i).getTelefono3())
               || textoBuscar.equals(contactos.get(i).getDireccion())
               || textoBuscar.equals(contactos.get(i).getCorreo())
-              || textoBuscar.equals(contactos.get(i).getAlias())){
+              || textoBuscar.equals(contactos.get(i).getAlias())
+              || textoBuscar.equals(contactos.get(i).getLugar())     ){
                 return contactos.get(i).toString();
             }
          }
