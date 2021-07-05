@@ -12,15 +12,13 @@ package Entidad;
 public class Estudiante {
     private String Numcuenta;
     private String Clave;
-    private String Saldo;
+    private Integer Saldo;
 
     public Estudiante() {
     }
 
-    public Estudiante(String Numcuenta, String Clave, String Saldo) {
-        this.Numcuenta = Numcuenta;
-        this.Clave = Clave;
-        this.Saldo = Saldo;
+    public Estudiante(String Codigo, String Saldo, String Clave) {
+       
     }
 
     public String getNumcuenta() {
@@ -39,11 +37,13 @@ public class Estudiante {
         this.Clave = Clave;
     }
 
-    public String getSaldo() {
+    public Integer getSaldo() {
         return Saldo;
     }
 
-    public void setSaldo(String Saldo) {
+    public void setSaldo(Integer Saldo) {
         this.Saldo = Saldo;
     }
+
+    
 }

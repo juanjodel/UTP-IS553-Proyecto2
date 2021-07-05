@@ -5,10 +5,15 @@
  */
 package Dao;
 
+import Entidad.Estudiante;
+
 /**
  *
  * @author Juanjo
  */
 public interface DaoEstudiante {
-    
+    Estudiante ConsultaSal (String Codigo,String Saldo);
+    int RetiralSal (String Codigo,String Saldo,String Clave);
+    Estudiante ConsignaSal (String Codigo,String cant);
+    Estudiante NuevoEstudiante (String Codigo,String Saldo,String Clave);
 }

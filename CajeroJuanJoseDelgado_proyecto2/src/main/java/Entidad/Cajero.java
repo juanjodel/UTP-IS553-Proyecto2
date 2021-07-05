@@ -12,6 +12,7 @@ package Entidad;
 public class Cajero {
     
     private String IndentCajero;
+    private String Billete2mil;
     private String Billete5mil;
     private String Billete10mil;
     private String Billete20mil;
@@ -21,13 +22,8 @@ public class Cajero {
     public Cajero() {
     }
 
-    public Cajero(String IndentCajero, String Billete5mil, String Billete10mil, String Billete20mil, String Billete50mil, String Montodispo) {
+    public Cajero(String IndentCajero) {
         this.IndentCajero = IndentCajero;
-        this.Billete5mil = Billete5mil;
-        this.Billete10mil = Billete10mil;
-        this.Billete20mil = Billete20mil;
-        this.Billete50mil = Billete50mil;
-        this.Montodispo = Montodispo;
     }
 
     public String getIndentCajero() {
@@ -36,6 +32,14 @@ public class Cajero {
 
     public void setIndentCajero(String IndentCajero) {
         this.IndentCajero = IndentCajero;
+    }
+
+    public String getBillete2mil() {
+        return Billete2mil;
+    }
+
+    public void setBillete2mil(String Billete2mil) {
+        this.Billete2mil = Billete2mil;
     }
 
     public String getBillete5mil() {
@@ -78,4 +82,5 @@ public class Cajero {
         this.Montodispo = Montodispo;
     }
     
+       
 }

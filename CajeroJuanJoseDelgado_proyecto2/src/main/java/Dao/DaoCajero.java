@@ -5,14 +5,15 @@
  */
 package Dao;
 
-import Entidad.Estudiante;
+import Entidad.Cajero;
 
 /**
  *
  * @author Juanjo
  */
 public interface DaoCajero {
-    Estudiante ConsultaSal (String Saldo);
-    Estudiante RetiralSal (String Saldo);
-    Estudiante ConsignaSal (String cant, String Saldo);
+    
+    int[] RetiralSal (String Codigo,String Saldo);
+    Cajero CarrodeValores (String Codigo,String Billete50Mil,String Billete20Mil,String Billete10Mil,String Billete5Mil,String Billete2Mil);
+    Cajero Nuevocajero (String IndentCajero);
 }
