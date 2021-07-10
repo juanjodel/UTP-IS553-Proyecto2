@@ -46,8 +46,8 @@ public class Fachada {
     public void NuevoEstudiante(String Codigo,String Saldo,String Clave) {
         DaoEstudiante.NuevoEstudiante(Codigo,Saldo,Clave);
     }
-    public int ConsultarSalFacade(String Codigo,String Saldo) {
-        Estudiante Usu= DaoEstudiante.ConsultaSal(Codigo, Saldo);
+    public int ConsultarSalFacade(String Codigo,String Clave) {
+        Estudiante Usu= DaoEstudiante.ConsultaSal(Codigo, Clave);
         return Usu.getSaldo();     
     }
     public void ConsignarFacade(String Codigo,String cant) {
