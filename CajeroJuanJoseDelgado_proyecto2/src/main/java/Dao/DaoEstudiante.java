@@ -16,4 +16,5 @@ public interface DaoEstudiante {
     int RetiralSal (String Codigo,String Saldo,String Clave);
     Estudiante ConsignaSal (String Codigo,String cant);
     Estudiante NuevoEstudiante (String Codigo,String Saldo,String Clave);
+    boolean EliminarEstudiante(String Codigo);
 }

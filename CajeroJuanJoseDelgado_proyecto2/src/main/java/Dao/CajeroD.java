@@ -29,7 +29,11 @@ public class CajeroD implements DaoCajero{
    
     @Override
     public int[] RetiralSal(String Codigo, String Saldo) {
+        
         int[]billetes=new int[4];
+        for (int i = 0; i < 4; i++) {
+            billetes[i]=0;
+        }
         int aux = Integer.parseInt(Saldo);
         for (Cajero cajero : cajerolista) {
             if(cajero.getIndentCajero().equals(Codigo)){
@@ -82,18 +86,20 @@ public class CajeroD implements DaoCajero{
     }
 
     @Override
-    public Cajero CarrodeValores(String Codigo, String Billete50Mil,String Billete20Mil,String Billete10Mil,String Billete5Mil,String Billete2Mil) {
+    public boolean CarrodeValores(String Codigo, String Billete50Mil,String Billete20Mil,String Billete10Mil,String Billete5Mil,String Billete2Mil) {
         for (Cajero cajero : cajerolista) {
             if (cajero.getIndentCajero().equals(Codigo)) {
+                System.out.println("oe");
                 cajero.setBillete2mil(Integer.toString(Integer.parseInt(Billete2Mil)+Integer.parseInt(cajero.getBillete2mil())));
                 cajero.setBillete5mil(Integer.toString(Integer.parseInt(Billete5Mil)+Integer.parseInt(cajero.getBillete5mil())));
                 cajero.setBillete10mil(Integer.toString(Integer.parseInt(Billete10Mil)+Integer.parseInt(cajero.getBillete10mil())));
                 cajero.setBillete20mil(Integer.toString(Integer.parseInt(Billete20Mil)+Integer.parseInt(cajero.getBillete20mil())));
                 cajero.setBillete50mil(Integer.toString(Integer.parseInt(Billete50Mil)+Integer.parseInt(cajero.getBillete50mil())));
-                return cajero;
+                
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     @Override

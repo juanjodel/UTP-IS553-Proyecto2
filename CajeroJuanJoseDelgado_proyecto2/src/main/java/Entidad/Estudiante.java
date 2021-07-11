@@ -17,9 +17,13 @@ public class Estudiante {
     public Estudiante() {
     }
 
-    public Estudiante(String Codigo, String Saldo, String Clave) {
-       
+    public Estudiante(String Numcuenta,Integer Saldo , String Clave) {
+        this.Numcuenta = Numcuenta;
+        this.Clave = Clave;
+        this.Saldo = Saldo;
     }
+
+   
 
     public String getNumcuenta() {
         return Numcuenta;

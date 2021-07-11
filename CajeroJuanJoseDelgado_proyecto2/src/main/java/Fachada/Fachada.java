@@ -22,10 +22,12 @@ public class Fachada {
     public Fachada(){
         DaoCajero = new CajeroD();
         DaoEstudiante = new EstudianteD();
+        DaoCajero.Nuevocajero("1");
+        DaoCajero.Nuevocajero("2");
+        DaoCajero.Nuevocajero("3");
+        DaoCajero.Nuevocajero("4");
     }
-    public void NuevoCajero(String Indent){
-        DaoCajero.Nuevocajero(Indent);
-    }
+    
     private  boolean RetiroEstudiante(String Numcuenta, String Clave,String CantRetirar) {
         
         if (DaoEstudiante.RetiralSal(Numcuenta,CantRetirar,Clave)==1){
@@ -40,8 +42,8 @@ public class Fachada {
         return null;
     }
             
-    public void CarrodeValoresFacade(String Codigo,String Billete50Mil,String Billete20Mil,String Billete10Mil,String Billete5Mil,String Billete2Mil) {
-        DaoCajero.CarrodeValores( Codigo, Billete50Mil, Billete20Mil, Billete10Mil, Billete5Mil, Billete2Mil);
+    public boolean CarrodeValoresFacade(String Codigo,String Billete50Mil,String Billete20Mil,String Billete10Mil,String Billete5Mil,String Billete2Mil) {
+       return DaoCajero.CarrodeValores( Codigo, Billete50Mil, Billete20Mil, Billete10Mil, Billete5Mil, Billete2Mil);
     }
     public void NuevoEstudiante(String Codigo,String Saldo,String Clave) {
         DaoEstudiante.NuevoEstudiante(Codigo,Saldo,Clave);
@@ -52,5 +54,11 @@ public class Fachada {
     }
     public void ConsignarFacade(String Codigo,String cant) {
         DaoEstudiante.ConsignaSal(Codigo, cant);
+    }
+    public  boolean EliminarFacade(String Codigo) {
+       if(DaoEstudiante.EliminarEstudiante(Codigo)){
+           return true;
+        }
+       return false;
     }
 }

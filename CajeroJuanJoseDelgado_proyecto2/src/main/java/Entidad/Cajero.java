@@ -20,10 +20,16 @@ public class Cajero {
     private String Montodispo;
 
     public Cajero() {
+        
     }
 
     public Cajero(String IndentCajero) {
         this.IndentCajero = IndentCajero;
+        Billete2mil="0";
+        Billete5mil="0";
+        Billete10mil="0";
+        Billete20mil="0";
+        Billete50mil="0";
     }
 
     public String getIndentCajero() {

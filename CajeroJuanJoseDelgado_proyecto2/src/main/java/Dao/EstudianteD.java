@@ -65,9 +65,23 @@ public class EstudianteD implements DaoEstudiante{
 
     @Override
     public Estudiante NuevoEstudiante(String Codigo, String Saldo, String Clave) {
-        Estudiante addestudiante = new Estudiante(Codigo,Saldo,Clave);
+        Estudiante addestudiante = new Estudiante(Codigo,Integer.valueOf(Saldo),Clave);
         ListaEstudiante.add(addestudiante);
         return addestudiante;
+    }
+
+    @Override
+    public boolean  EliminarEstudiante(String Codigo) {
+        Estudiante estu= new Estudiante();
+        for (Estudiante estudiante : ListaEstudiante) {
+            if (Codigo.equals(estudiante.getNumcuenta())) {
+                
+                estu = estudiante;
+                
+            }
+        }
+        return ListaEstudiante.remove(estu);
+        
     }
     
 }
