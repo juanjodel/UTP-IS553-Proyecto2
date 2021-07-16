@@ -36,19 +36,19 @@ public class EstudianteD implements DaoEstudiante{
     }
 
     @Override
-    public int RetiralSal(String Codigo,String Saldo,String Clave) {
+    public boolean RetiralSal(String Codigo,String Saldo,String Clave) {
        for(Estudiante gbEstudiante:ListaEstudiante){
-            if (gbEstudiante.getNumcuenta().equals(Codigo)) {
-                if (gbEstudiante.getClave().equals(Clave)) {
-                    if (Integer.parseInt(Saldo)< gbEstudiante.getSaldo()) {
-                    gbEstudiante.setSaldo(gbEstudiante.getSaldo()-Integer.parseInt(Saldo));
-                    }
-                return 1;
+            if (gbEstudiante.getNumcuenta().equals(Codigo)&&gbEstudiante.getClave().equals(Clave)) {
+               
+                    if (Integer.parseInt(Saldo)<= gbEstudiante.getSaldo()) {
+                        gbEstudiante.setSaldo(gbEstudiante.getSaldo()-Integer.parseInt(Saldo));
+                        return true;
                 }
+                
             }
                     
         }
-       return 0;
+       return false;
     }
      
 

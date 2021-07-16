@@ -174,6 +174,12 @@ public class Cajero extends javax.swing.JFrame {
 
         jLabel4.setText("Clave");
 
+        Clavetxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClavetxtActionPerformed(evt);
+            }
+        });
+
         jButton5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jButton5.setText("Consultar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -260,6 +266,12 @@ public class Cajero extends javax.swing.JFrame {
         NumUsutxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NumUsutxtActionPerformed(evt);
+            }
+        });
+
+        ClaveUsutxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClaveUsutxtActionPerformed(evt);
             }
         });
 
@@ -566,12 +578,13 @@ public class Cajero extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
       Guardard();
-      int[] retiro= new int[4];
-        for (int i = 0; i < 4; i++) {
+      int[] retiro= new int[5];
+        for (int i = 0; i < 5; i++) {
             retiro[i]=0;
         }
       String mensa= JOptionPane.showInputDialog(this,"Ingrese el monto");
-      retiro=fachadacajeroPrincipal.RetiroCajero(identcajerotxt.getText(), Numerotxt.getText(), Clavetxt.getText(), mensa);
+      System.out.println(mensa);
+      retiro=fachadacajeroPrincipal.RetiroCajero(identcajerotxt.getText().trim(), Numerotxt.getText().trim(), Clavetxt.getText().trim(), mensa.trim());
       JOptionPane.showMessageDialog(this, "Numero de 50mil "+retiro[0]+"\n"+"Numero de 20mil "+retiro[1]+"\n"+"Numero de 10mil"+retiro[2]+"\n"+"Numero de 5mil"+retiro[3]+"\n"+"Numero de 2mil"+retiro[4]);
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -621,7 +634,7 @@ public class Cajero extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         GuarUsu();
-        fachadacajeroPrincipal.NuevoEstudiante(NumUsutxt.getText(), SaldoUsutxt.getText(), Clavetxt.getText());
+        fachadacajeroPrincipal.NuevoEstudiante(NumUsutxt.getText(), SaldoUsutxt.getText(), ClaveUsutxt.getText());
         JOptionPane.showMessageDialog(this, "Usuario creado");
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -629,6 +642,8 @@ public class Cajero extends javax.swing.JFrame {
         GuardConsignar();
         fachadacajeroPrincipal.ConsignarFacade(Cuentatxt.getText(), Montotxt.getText());
         JOptionPane.showMessageDialog(this, "Consignacion exitosa");
+        Cuentatxt.setText("");
+        Montotxt.setText("");
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
@@ -638,6 +653,14 @@ public class Cajero extends javax.swing.JFrame {
         }else{
         JOptionPane.showMessageDialog(this, "No se ha agregado");}
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void ClavetxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClavetxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ClavetxtActionPerformed
+
+    private void ClaveUsutxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClaveUsutxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ClaveUsutxtActionPerformed
 
     public  void Guardard(){
         if(Numerotxt.getText().isBlank()){

@@ -13,7 +13,7 @@ import Entidad.Estudiante;
  */
 public interface DaoEstudiante {
     Estudiante ConsultaSal (String Codigo,String Saldo);
-    int RetiralSal (String Codigo,String Saldo,String Clave);
+    boolean RetiralSal (String Codigo,String Saldo,String Clave);
     Estudiante ConsignaSal (String Codigo,String cant);
     Estudiante NuevoEstudiante (String Codigo,String Saldo,String Clave);
     boolean EliminarEstudiante(String Codigo);

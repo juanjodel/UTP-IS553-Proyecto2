@@ -28,17 +28,12 @@ public class Fachada {
         DaoCajero.Nuevocajero("4");
     }
     
-    private  boolean RetiroEstudiante(String Numcuenta, String Clave,String CantRetirar) {
-        
-        if (DaoEstudiante.RetiralSal(Numcuenta,CantRetirar,Clave)==1){
-            return true;
-        }
-        return false;
-    }
+   
     public int[] RetiroCajero(String IdentCajero,String Numcuenta, String Clave,String CantRetirar){
-        if (RetiroEstudiante(Numcuenta, Clave, CantRetirar)) {
-            return DaoCajero.RetiralSal(Numcuenta, Clave);  
+        if (DaoEstudiante.RetiralSal(Numcuenta, CantRetirar,Clave)) {
+            return DaoCajero.RetiralSal(IdentCajero, CantRetirar);  
         }
+        System.out.println("aqui esta el error");
         return null;
     }
             
