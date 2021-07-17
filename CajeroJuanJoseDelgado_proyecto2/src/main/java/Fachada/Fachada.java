@@ -29,12 +29,12 @@ public class Fachada {
     }
     
    
-    public int[] RetiroCajero(String IdentCajero,String Numcuenta, String Clave,String CantRetirar){
+    public int[] RetiroCajero(String IdentCajero,String Numcuenta, String Clave,String CantRetirar) throws Error{
         if (DaoEstudiante.RetiralSal(Numcuenta, CantRetirar,Clave)) {
             return DaoCajero.RetiralSal(IdentCajero, CantRetirar);  
         }
-        System.out.println("aqui esta el error");
-        return null;
+        throw new Error("Error de transaccion");
+        
     }
             
     public boolean CarrodeValoresFacade(String Codigo,String Billete50Mil,String Billete20Mil,String Billete10Mil,String Billete5Mil,String Billete2Mil) {

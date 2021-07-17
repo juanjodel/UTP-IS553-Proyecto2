@@ -28,7 +28,7 @@ public class CajeroD implements DaoCajero{
     
    
     @Override
-    public int[] RetiralSal(String Codigo, String Saldo) {
+    public int[] RetiralSal(String Codigo, String Saldo) throws Error{
         
         int[]billetes=new int[5];//hacer este de tipo double
         for (int i = 0; i < 5; i++) {
@@ -90,6 +90,8 @@ public class CajeroD implements DaoCajero{
                     }
                     
                 }
+            }else{
+                throw new Error("El cajero no tiene fondos");
             }
         }
         System.out.println(billetes);
