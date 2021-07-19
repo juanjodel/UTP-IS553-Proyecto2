@@ -42,7 +42,7 @@ public class CajeroD implements DaoCajero{
             if(cajero.getIndentCajero().equals(Codigo)){
                 System.out.println("Cajero encontrado");
                 if (aux <= Integer.parseInt(cajero.getMontodispo())){
-                    System.out.println("entro");
+                    System.out.println(cajero.getMontodispo());
                     if (aux>=50000){
                         int cant50 = aux/50000;
                         System.out.println(cant50);
@@ -90,8 +90,9 @@ public class CajeroD implements DaoCajero{
                     }
                     
                 }
-            }else{
+                else{
                 throw new Error("El cajero no tiene fondos");
+            }
             }
         }
         System.out.println(billetes);
